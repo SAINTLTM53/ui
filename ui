@@ -1228,7 +1228,7 @@ local function getObjGen()
             Gui.MainUI.BackgroundColor3 = Color3.fromRGB(18, 18, 18)
             Gui.MainUI.Position = UDim2.new(0.5, 0, 0.5, 0)
             --Gui.MainUI.Size = UDim2.new(0.47, 0, 0.75, 0)
-            Gui.MainUI.Size = UDim2.new(0.5, 0, 0.6, 0) -- 50% width and 60% height of screen
+            Gui.MainUI.Size = UDim2.new(0.3, 0, 0.4, 0) -- 50% width and 60% height of screen
             Gui.MainUI.ZIndex = 100
 
             Gui.DropShadowHolder_9.Name = "DropShadowHolder"

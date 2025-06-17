@@ -1228,7 +1228,7 @@ local function getObjGen()
             Gui.MainUI.BackgroundColor3 = Color3.fromRGB(18, 18, 18)
             Gui.MainUI.Position = UDim2.new(0.5, 0, 0.5, 0)
             --Gui.MainUI.Size = UDim2.new(0.47, 0, 0.75, 0)
-            Gui.MainUI.Size = UDim2.new(0.5, 0, 0.6, 0)
+            Gui.MainUI.Size = UDim2.new(0.5, 0, 0.6, 0) -- 50% width and 60% height of screen
             Gui.MainUI.ZIndex = 100
 
             Gui.DropShadowHolder_9.Name = "DropShadowHolder"
@@ -1313,20 +1313,6 @@ local function getObjGen()
             Gui.Title_2.TextColor3 = Color3.fromRGB(255, 255, 255)
             Gui.Title_2.TextSize = 14.000
             Gui.Title_2.TextXAlignment = Enum.TextXAlignment.Left
-
-            local avatar = Instance.new("ImageLabel")
-avatar.Name = "Avatar"
-avatar.Parent = Gui.UserInfo
-avatar.Size = UDim2.new(0, 40, 0, 40)
-avatar.Position = UDim2.new(0, 10, 0, 10)
-avatar.BackgroundTransparency = 1
-avatar.Image = "https://www.roblox.com/headshot-thumbnail/image?userId=" .. tostring(game.Players.LocalPlayer.UserId) .. "&width=420&height=420&format=png"
-avatar.ZIndex = 101
-
-local avatarCorner = Instance.new("UICorner")
-avatarCorner.CornerRadius = UDim.new(1, 0)
-avatarCorner.Parent = avatar
-
 
             Gui.Line_3.Name = "Line"
             Gui.Line_3.Parent = Gui.UserInfo

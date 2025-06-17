@@ -1231,6 +1231,50 @@ local function getObjGen()
             Gui.MainUI.Size = UDim2.new(0.3, 0, 0.4, 0) -- 50% width and 60% height of screen
             Gui.MainUI.ZIndex = 100
 
+local ResizeHandle = Instance.new("Frame")
+ResizeHandle.Name = "ResizeHandle"
+ResizeHandle.Size = UDim2.new(0, 24, 0, 24)
+ResizeHandle.Position = UDim2.new(1, -24, 1, -24)
+ResizeHandle.AnchorPoint = Vector2.new(1, 1)
+ResizeHandle.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+ResizeHandle.BorderSizePixel = 0
+ResizeHandle.ZIndex = 105
+ResizeHandle.Parent = Gui.MainUI
+
+local corner = Instance.new("UICorner")
+corner.CornerRadius = UDim.new(0, 6)
+corner.Parent = ResizeHandle
+
+local UserInputService = game:GetService("UserInputService")
+local dragging = false
+local dragInput
+local dragStart
+local startSize
+
+ResizeHandle.InputBegan:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseButton1 then
+		dragging = true
+		dragStart = input.Position
+		startSize = Gui.MainUI.Size
+		input.Changed:Connect(function()
+			if input.UserInputState == Enum.UserInputState.End then
+				dragging = false
+			end
+		end)
+	end
+end)
+
+UserInputService.InputChanged:Connect(function(input)
+	if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
+		local delta = input.Position - dragStart
+		local newWidth = math.clamp(startSize.X.Offset + delta.X, 300, 1600)
+		local newHeight = math.clamp(startSize.Y.Offset + delta.Y, 200, 1000)
+		Gui.MainUI.Size = UDim2.new(0, newWidth, 0, newHeight)
+	end
+end)
+
+
+
             Gui.DropShadowHolder_9.Name = "DropShadowHolder"
             Gui.DropShadowHolder_9.Parent = Gui.MainUI
             Gui.DropShadowHolder_9.BackgroundTransparency = 1.000

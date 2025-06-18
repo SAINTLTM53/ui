@@ -128,6 +128,9 @@ local function getObjGen()
                 Watermark = Instance.new("TextLabel"),
                 UIPadding_6 = Instance.new("UIPadding"),
                 MainUI = Instance.new("Frame"),
+
+                
+
                 DropShadowHolder_9 = Instance.new("Frame"),
                 DropShadow_10 = Instance.new("ImageLabel"),
                 UICorner_17 = Instance.new("UICorner"),
@@ -285,6 +288,55 @@ local function getObjGen()
                 UICorner_23 = Instance.new("UICorner"),
                 UIAspectRatioConstraint_17 = Instance.new("UIAspectRatioConstraint")
             }
+
+-- Resize Handle
+local ResizeHandle = Instance.new("Frame")
+ResizeHandle.Name = "ResizeHandle"
+ResizeHandle.Size = UDim2.new(0, 20, 0, 20)
+ResizeHandle.Position = UDim2.new(1, -20, 1, -20)
+ResizeHandle.AnchorPoint = Vector2.new(1, 1)
+ResizeHandle.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+ResizeHandle.BorderSizePixel = 0
+ResizeHandle.ZIndex = 999
+ResizeHandle.Parent = Gui.MainUI
+
+local grip = Instance.new("ImageLabel")
+grip.Size = UDim2.new(1, 0, 1, 0)
+grip.BackgroundTransparency = 1
+grip.Image = "rbxassetid://5277761162"
+grip.ImageColor3 = Color3.fromRGB(200, 200, 200)
+grip.Parent = ResizeHandle
+
+local corner = Instance.new("UICorner")
+corner.CornerRadius = UDim.new(0, 6)
+corner.Parent = ResizeHandle
+
+local UserInputService = game:GetService("UserInputService")
+local dragging = false
+local dragStart, startSize
+
+ResizeHandle.InputBegan:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseButton1 then
+		dragging = true
+		dragStart = input.Position
+		startSize = Gui.MainUI.Size
+		input.Changed:Connect(function()
+			if input.UserInputState == Enum.UserInputState.End then
+				dragging = false
+			end
+		end)
+	end
+end)
+
+UserInputService.InputChanged:Connect(function(input)
+	if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
+		local delta = input.Position - dragStart
+		local newX = math.clamp(startSize.X.Offset + delta.X, 300, 1600)
+		local newY = math.clamp(startSize.Y.Offset + delta.Y, 200, 1000)
+		Gui.MainUI.Size = UDim2.new(0, newX, 0, newY)
+	end
+end)
+
 
             --Properties:
 

@@ -1228,52 +1228,33 @@ local function getObjGen()
             Gui.MainUI.BackgroundColor3 = Color3.fromRGB(18, 18, 18)
             Gui.MainUI.Position = UDim2.new(0.5, 0, 0.5, 0)
             --Gui.MainUI.Size = UDim2.new(0.47, 0, 0.75, 0)
-            Gui.MainUI.Size = UDim2.new(0.3, 0, 0.4, 0) -- 50% width and 60% height of screen
+            Gui.MainUI.Size = UDim2.new(0.4, 0, 0.5, 0) -- 50% width and 60% height of screen
             Gui.MainUI.ZIndex = 100
 
+           -- Create Resize Handle
 local ResizeHandle = Instance.new("Frame")
 ResizeHandle.Name = "ResizeHandle"
-ResizeHandle.Size = UDim2.new(0, 24, 0, 24)
-ResizeHandle.Position = UDim2.new(1, -24, 1, -24)
+ResizeHandle.Size = UDim2.new(0, 20, 0, 20)
+ResizeHandle.Position = UDim2.new(1, -20, 1, -20)
 ResizeHandle.AnchorPoint = Vector2.new(1, 1)
-ResizeHandle.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+ResizeHandle.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
 ResizeHandle.BorderSizePixel = 0
-ResizeHandle.ZIndex = 105
+ResizeHandle.ZIndex = 999
 ResizeHandle.Parent = Gui.MainUI
 
+-- Optional grip icon
+local grip = Instance.new("ImageLabel")
+grip.Size = UDim2.new(1, 0, 1, 0)
+grip.BackgroundTransparency = 1
+grip.Image = "rbxassetid://5277761162"
+grip.ImageColor3 = Color3.fromRGB(200, 200, 200)
+grip.Parent = ResizeHandle
+
+-- Round corner
 local corner = Instance.new("UICorner")
 corner.CornerRadius = UDim.new(0, 6)
 corner.Parent = ResizeHandle
-
-local UserInputService = game:GetService("UserInputService")
-local dragging = false
-local dragInput
-local dragStart
-local startSize
-
-ResizeHandle.InputBegan:Connect(function(input)
-	if input.UserInputType == Enum.UserInputType.MouseButton1 then
-		dragging = true
-		dragStart = input.Position
-		startSize = Gui.MainUI.Size
-		input.Changed:Connect(function()
-			if input.UserInputState == Enum.UserInputState.End then
-				dragging = false
-			end
-		end)
-	end
-end)
-
-UserInputService.InputChanged:Connect(function(input)
-	if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
-		local delta = input.Position - dragStart
-		local newWidth = math.clamp(startSize.X.Offset + delta.X, 300, 1600)
-		local newHeight = math.clamp(startSize.Y.Offset + delta.Y, 200, 1000)
-		Gui.MainUI.Size = UDim2.new(0, newWidth, 0, newHeight)
-	end
-end)
-
-
+ 
 
             Gui.DropShadowHolder_9.Name = "DropShadowHolder"
             Gui.DropShadowHolder_9.Parent = Gui.MainUI
@@ -1416,9 +1397,14 @@ end)
             Gui.Logo.LayoutOrder = -5
             Gui.Logo.Size = UDim2.new(1, 0, 0.100000001, 0)
             Gui.Logo.ZIndex = 122
-            Gui.Logo.Image = "rbxassetid://8343875413"
+            Gui.Logo.Image = "rbxassetid://72846339946333"
             Gui.Logo.ImageColor3 = Color3.fromRGB(134, 142, 255)
             Gui.Logo.ScaleType = Enum.ScaleType.Fit
+
+Gui.Logo.BackgroundTransparency = 1
+Gui.Logo.ScaleType = Enum.ScaleType.Fit
+Gui.Logo.ImageColor3 = Color3.new(1, 1, 1) -- full brightness
+
 
             Gui.UIGradient_5.Color =
                 ColorSequence.new {
@@ -5561,5 +5547,32 @@ function UILibrary.Section:Dropdown(sett, callback)
 
     return meta
 end
+
+local UserInputService = game:GetService("UserInputService")
+local dragging = false
+local dragStart, startSize
+
+ResizeHandle.InputBegan:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseButton1 then
+		dragging = true
+		dragStart = input.Position
+		startSize = Gui.MainUI.Size
+		input.Changed:Connect(function()
+			if input.UserInputState == Enum.UserInputState.End then
+				dragging = false
+			end
+		end)
+	end
+end)
+
+UserInputService.InputChanged:Connect(function(input)
+	if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
+		local delta = input.Position - dragStart
+		local newX = math.clamp(startSize.X.Offset + delta.X, 300, 1600)
+		local newY = math.clamp(startSize.Y.Offset + delta.Y, 200, 1000)
+		Gui.MainUI.Size = UDim2.new(0, newX, 0, newY)
+	end
+end)
+
 
 return UILibrary

@@ -5599,32 +5599,4 @@ function UILibrary.Section:Dropdown(sett, callback)
 
     return meta
 end
-
-local UserInputService = game:GetService("UserInputService")
-local dragging = false
-local dragStart, startSize
-
-ResizeHandle.InputBegan:Connect(function(input)
-	if input.UserInputType == Enum.UserInputType.MouseButton1 then
-		dragging = true
-		dragStart = input.Position
-		startSize = Gui.MainUI.Size
-		input.Changed:Connect(function()
-			if input.UserInputState == Enum.UserInputState.End then
-				dragging = false
-			end
-		end)
-	end
-end)
-
-UserInputService.InputChanged:Connect(function(input)
-	if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
-		local delta = input.Position - dragStart
-		local newX = math.clamp(startSize.X.Offset + delta.X, 300, 1600)
-		local newY = math.clamp(startSize.Y.Offset + delta.Y, 200, 1000)
-		Gui.MainUI.Size = UDim2.new(0, newX, 0, newY)
-	end
-end)
-
-
 return UILibrary

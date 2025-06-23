@@ -4683,12 +4683,6 @@ function Library:CreateWindow(WindowInfo)
             })
         end
 
-        local X = Library:GetTextBounds(
-            WindowInfo.Title,
-            Library.Scheme.Font,
-            20,
-            TitleHolder.AbsoluteSize.X - (WindowInfo.Icon and WindowInfo.IconSize.X.Offset + 6 or 0) - 12
-        )
         New("TextLabel", {
             BackgroundTransparency = 1,
             Size = UDim2.new(0, X, 1, 0),

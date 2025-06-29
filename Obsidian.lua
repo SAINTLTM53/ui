@@ -963,7 +963,7 @@ local function ParentUI(UI: Instance, SkipHiddenUI: boolean?)
 end
 
 local ScreenGui = New("ScreenGui", {
-    Name = "Obsidian",
+    Name = "FoundationOverlay",
     DisplayOrder = 999,
     ResetOnSpawn = false,
 })
@@ -975,7 +975,7 @@ ScreenGui.DescendantRemoving:Connect(function(Instance)
 end)
 
 local ModalScreenGui = New("ScreenGui", {
-    Name = "ObsidanModal",
+    Name = "FoundationOverlay",
     DisplayOrder = 999,
     ResetOnSpawn = false,
 })

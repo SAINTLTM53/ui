@@ -492,7 +492,7 @@ do
         local SatVibMapOuter = Library:Create('Frame', {
             BorderColor3 = Color3.new(0, 0, 0);
             Position = UDim2.new(0, 4, 0, 25);
-            Size = UDim2.new(0, 200, 0, 200);
+            Size = UDim2.new(0.4, 0, 0.6, 0) -- 40% width, 60% height of screen;
             ZIndex = 17;
             Parent = PickerFrameInner;
         });
@@ -501,7 +501,7 @@ do
             BackgroundColor3 = Library.BackgroundColor;
             BorderColor3 = Library.OutlineColor;
             BorderMode = Enum.BorderMode.Inset;
-            Size = UDim2.new(1, 0, 1, 0);
+            Size = UDim2.new(0.4, 0, 0.6, 0);
             ZIndex = 18;
             Parent = SatVibMapOuter;
         });

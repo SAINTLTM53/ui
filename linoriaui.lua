@@ -437,7 +437,7 @@ do
             BackgroundColor3 = ColorPicker.Value;
             BorderColor3 = Library:GetDarkerColor(ColorPicker.Value);
             BorderMode = Enum.BorderMode.Inset;
-            Size = UDim2.new(0.4, 0, 0.6, 0);
+            Size = UDim2.new(0, 28, 0, 14);
             ZIndex = 6;
             Parent = ToggleLabel;
         });
@@ -445,7 +445,7 @@ do
         -- Transparency image taken from https://github.com/matas3535/SplixPrivateDrawingLibrary/blob/main/Library.lua cus i'm lazy
         local CheckerFrame = Library:Create('ImageLabel', {
             BorderSizePixel = 0;
-            Size = UDim2.new(0.4, 0, 0.6, 0);
+            Size = UDim2.new(0, 27, 0, 13);
             ZIndex = 5;
             Image = 'http://www.roblox.com/asset/?id=12977615774';
             Visible = not not Info.Transparency;
@@ -492,7 +492,7 @@ do
         local SatVibMapOuter = Library:Create('Frame', {
             BorderColor3 = Color3.new(0, 0, 0);
             Position = UDim2.new(0, 4, 0, 25);
-            Size = UDim2.new(0.4, 0, 0.6, 0) -- 40% width, 60% height of screen;
+            Size = UDim2.new(0, 200, 0, 200);
             ZIndex = 17;
             Parent = PickerFrameInner;
         });
@@ -501,7 +501,7 @@ do
             BackgroundColor3 = Library.BackgroundColor;
             BorderColor3 = Library.OutlineColor;
             BorderMode = Enum.BorderMode.Inset;
-            Size = UDim2.new(0.4, 0, 0.6, 0);
+            Size = UDim2.new(1, 0, 1, 0);
             ZIndex = 18;
             Parent = SatVibMapOuter;
         });

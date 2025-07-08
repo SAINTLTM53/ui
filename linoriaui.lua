@@ -3632,14 +3632,5 @@ end;
 Players.PlayerAdded:Connect(OnPlayerChange);
 Players.PlayerRemoving:Connect(OnPlayerChange);
 
-task.wait() -- Give time for UI to build
-
-local screenSize = game:GetService("Workspace").CurrentCamera.ViewportSize
-local widthScale = 0.4 -- 40% of screen width
-local heightScale = 0.6 -- 60% of screen height
-
--- Update the main frame size directly
-Window.Container.Size = UDim2.new(widthScale, 0, heightScale, 0)
-
 getgenv().Library = Library
 return Library

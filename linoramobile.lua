@@ -1,4 +1,4 @@
-local Config = {
+getgenv().Config = {
     ESP = {
         Enabled = false,
         TeamCheck = false,
@@ -173,7 +173,7 @@ Config.ESP.Fonts = Fonts
 
 local Players_ESP = {}
 
-local RefreshAllElements = function()
+getgenv().RefreshAllElements = function()
     for i,v in pairs(Players_ESP) do
         if v and v.RefreshElements then
             v.RefreshElements()
@@ -778,3 +778,5 @@ do
         end)
     end;
 end
+
+

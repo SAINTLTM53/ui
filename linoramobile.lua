@@ -1,9 +1,20 @@
-local ESPModule = {}
-local Config = getgenv().ESP_Config
-local Fonts = getgenv().ESP_Fonts
+
+local Players = game:GetService("Players")
+
+local function GetESPColorFromTeam(player)
+    local isFriend = Players.LocalPlayer:IsFriendsWith(player.UserId)
+    if isFriend and getgenv().ESP_Config.Options.Friendcheck then
+        return getgenv().ESP_Config.Options.FriendcheckRGB
+    end
+    if getgenv().ESP_Config.TeamCheck and player.Team == Players.LocalPlayer.Team then
+        return getgenv().ESP_Config.Options.TeamcheckRGB
+    end
+    return getgenv().ESP_Config.Drawing.Names.RGB
+end
+Config.ESP.Fonts = Fonts
 
 local Players_ESP = {}
-
+getgenv().ESPModule = {
 local RefreshAllElements = function()
     for i,v in pairs(Players_ESP) do
         if v and v.RefreshElements then
@@ -609,5 +620,4 @@ do
         end)
     end;
 end
-
-return ESPModule
+}

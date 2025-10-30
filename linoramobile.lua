@@ -1,20 +1,178 @@
+local Config = {
+    ESP = {
+        Enabled = false,
+        TeamCheck = false,
+        MaxDistance = 500,
+        FontSize = 12,
+        Font = Enum.Font.Code,
+        FadeOut = {
+            OnDistance = true,
+            OnDeath = true,
+            OnLeave = true,
+        },
+        Options = { 
+            Teamcheck = true, TeamcheckRGB = Color3.fromRGB(0, 255, 0),
+            Friendcheck = true, FriendcheckRGB = Color3.fromRGB(0, 255, 0),
+            Highlight = false, HighlightRGB = Color3.fromRGB(255, 0, 0),
+        },
+        Drawing = {
+            Chams = {
+                Enabled  = false,
+                Thermal = false,
+                FillRGB = Color3.fromRGB(119, 120, 255),
+                Fill_Transparency = 80,
+                OutlineRGB = Color3.fromRGB(0,0,0),
+                Outline_Transparency = 80,
+                VisibleCheck = false,
+            },
+            Names = {
+                Enabled = false,
+                Transparency = 0,
+                RGB = Color3.fromRGB(255, 255, 255),
+            },
+            Flags = {
+                Enabled = false,
+            },
+            Distances = {
+                Enabled = false, 
+                Position = "Bottom",
+                Transparency = 0,
+                RGB = Color3.fromRGB(255, 255, 255),
+            },
+            Weapons = {
+                Enabled = false, WeaponTextRGB = Color3.fromRGB(119, 120, 255),
+                Outlined = false,
+                Gradient = false,
+                Transparency = 0,
+                GradientRGB1 = Color3.fromRGB(255, 255, 255), GradientRGB2 = Color3.fromRGB(119, 120, 255),
+            },
+            Inventory = {
+                Enabled = false, RGB = Color3.fromRGB(255, 255, 255),
+                Transparency = 0,
+            },
+            Healthbar = {
+                Enabled = false,  
+                HealthText = false, Lerp = false, HealthTextRGB = Color3.fromRGB(0, 255, 0),
+                Width = 2.5,
+                Transparency = 0,
+                HealthTextTransparency = 0,
+                Gradient = false, GradientRGB1 = Color3.fromRGB(255, 0, 0), GradientRGB2 = Color3.fromRGB(0,255,0)
+            },
+            Boxes = {
+                Animate = false,
+                RotationSpeed = 300,
+                Gradient = false, GradientRGB1 = Color3.fromRGB(119, 120, 255), GradientRGB2 = Color3.fromRGB(0, 0, 0), 
+                GradientFill = false, GradientFillRGB1 = Color3.fromRGB(119, 120, 255), GradientFillRGB2 = Color3.fromRGB(0, 0, 0), 
+                Filled = {
+                    Enabled = false,
+                    Transparency = 0.75,
+                    RGB = Color3.fromRGB(0, 0, 0),
+                },
+                Full = {
+                    Enabled = false,
+                    Transparency = 0,
+                    RGB = Color3.fromRGB(255, 255, 255),
+                },
+                Bounding = {
+                    Enabled = false,
+                    Transparency = 0,
+                    RGB = Color3.fromRGB(255, 255, 255),
+                },
+                Corner = {
+                    Enabled = false,
+                    Transparency = 0,
+                    RGB = Color3.fromRGB(255, 255, 255),
+                },
+            };
+        };
+        Connections = {
+            RunService = game:GetService("RunService");
+        };
+        Fonts = {};
+    };
+};
 
-local Players = game:GetService("Players")
+local Services = {
+    Workspace = game:GetService("Workspace"),
+    RunService = game:GetService("RunService"),
+    Players = game:GetService("Players"),
+    CoreGui = game:GetService("CoreGui"),
+    HttpService = game:GetService("HttpService")
+}
 
-local function GetESPColorFromTeam(player)
-    local isFriend = Players.LocalPlayer:IsFriendsWith(player.UserId)
-    if isFriend and getgenv().ESP_Config.Options.Friendcheck then
-        return getgenv().ESP_Config.Options.FriendcheckRGB
-    end
-    if getgenv().ESP_Config.TeamCheck and player.Team == Players.LocalPlayer.Team then
-        return getgenv().ESP_Config.Options.TeamcheckRGB
-    end
-    return getgenv().ESP_Config.Drawing.Names.RGB
+Config.ESP.Connections.RunService = Services.RunService
+
+local DefaultPlayerSettings = {}
+
+local library = {
+    directory = "ESP_Library" 
+}
+
+if not isfolder(library.directory) then
+    makefolder(library.directory)
 end
+if not isfolder(library.directory.."/assets") then
+    makefolder(library.directory.."/assets")
+end
+if not isfolder(library.directory.."/fonts") then
+    makefolder(library.directory.."/fonts")
+end
+
+local Fonts = {}; do
+    local function RegisterFont(Name, Weight, Style, Asset)
+        if isfile(library.directory.."/assets/"..Asset.Id) then
+            delfile(library.directory.."/assets/"..Asset.Id)
+        end
+
+        writefile(library.directory.."/assets/"..Asset.Id, Asset.Font)
+
+        local Data = {
+            name = Name,
+            faces = {
+                {
+                    Name = "Normal",
+                    weight = Weight,
+                    style = Style,
+                    assetId = getcustomasset(library.directory.."/assets/"..Asset.Id),
+                },
+            },
+        }
+
+        writefile(library.directory.."/fonts/"..Name .. ".font", Services.HttpService:JSONEncode(Data))
+
+        return getcustomasset(library.directory.."/fonts/"..Name .. ".font");
+    end
+    
+    local Tahoma = RegisterFont("Tahoma", 400, "Normal", {
+        Id = "Tahoma.ttf",
+        Font = game:HttpGet("https://github.com/KingVonOBlockJoyce/OctoHook-UI/raw/refs/heads/main/fs-tahoma-8px%20(3).ttf"),
+    })
+
+    local Pixel = RegisterFont("Pixel", 400, "Normal", {
+        Id = "Pixel.ttf",
+        Font = game:HttpGet("https://github.com/KingVonOBlockJoyce/vaderpaste.luau/raw/refs/heads/main/Pixel.ttf"),
+    })
+
+    local Minecraftia = RegisterFont("Minecraftia", 400, "Normal", {
+        Id = "Minecraftia.ttf",
+        Font = game:HttpGet("https://github.com/i77lhm/storage/raw/refs/heads/main/fonts/Minecraftia-Regular.ttf"),
+    }) 
+
+    local Verdana = RegisterFont("Verdana", 400, "Normal", {
+        Id = "Verdana.ttf",
+        Font = game:HttpGet("https://github.com/i77lhm/storage/raw/refs/heads/main/fonts/Verdana-Font.ttf"),
+    })
+
+    Fonts["Plex"] = Font.new(Tahoma, Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+    Fonts["Pixel"] = Font.new(Pixel, Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+    Fonts["Minecraftia"] = Font.new(Minecraftia, Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+    Fonts["Verdana"] = Font.new(Verdana, Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+end
+
 Config.ESP.Fonts = Fonts
 
 local Players_ESP = {}
-getgenv().ESPModule = {
+
 local RefreshAllElements = function()
     for i,v in pairs(Players_ESP) do
         if v and v.RefreshElements then
@@ -620,4 +778,3 @@ do
         end)
     end;
 end
-}

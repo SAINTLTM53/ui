@@ -790,3 +790,8 @@ do
         end)
     end;
 end
+
+return {
+    Config = Config,
+    RefreshAllElements = RefreshAllElements
+}
